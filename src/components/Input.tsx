@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { TEInput } from 'tw-elements-react'
 
 type inputType = {
 
@@ -10,20 +9,16 @@ type inputType = {
     isPassword?: boolean
     setShowPassword?: (e: boolean) => void
     showPassword?: boolean
-    showVisibilty?:()=>void | undefined
+    showVisibilty?: () => void | undefined
 
 }
 
-const Input=(props: inputType) => {
+const Input = (props: inputType) => {
     const [showPassword, setShowPassword] = useState<boolean>(false)
 
-    // const handlePasswordVisiblity =(e:any)=>{
-    //     e. stopPropagation()
-    //     console.log("a")
-    //     setShowPassword(!showPassword)
-       
-    // }
-    
+
+
+
     return (
 
         <>
@@ -31,10 +26,10 @@ const Input=(props: inputType) => {
             <div className='relative container mx-auto mb-5'  >
 
                 <label className="block text-gray-700 text-sm font-bold mb-2" form="username">
-                    {props?.label }
+                    {props?.label}
                 </label>
-                <input   className="shadow appearance-none border rounded  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full" id="username" type={props?.isPassword ? props?.showPassword ? 'password' :'text':'text'   } placeholder={props?.placeholder}
-                    
+                <input className="shadow appearance-none border rounded  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full" id="username" type={props?.isPassword ? props?.showPassword ? 'password' : 'text' : 'text'} placeholder={props?.placeholder}
+
                     value={props?.value}
                     onChange={(e) => { props?.setValue(e.target.value) }}
                 />
@@ -42,7 +37,7 @@ const Input=(props: inputType) => {
                     props?.isPassword ? <button
                         type='button'
                         className="absolute inset-y-0 right-0 mt-7 flex px-4 text-gray-600  items-center justify-center"
-                        onClick={()=>props?.showVisibilty?.()}
+                        onClick={() => props?.showVisibilty?.()}
                     >
 
                         {
@@ -86,7 +81,7 @@ const Input=(props: inputType) => {
                                 </svg>
                         }
 
-                    </button>:null
+                    </button> : null
                 }
 
 
