@@ -4,14 +4,9 @@ import './App.css';
 import { initializeApp } from 'firebase/app';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
-import Home from './pages/Home/Home';
-import { useSelector } from 'react-redux';
-
-
 
 const  App=()=> {
-  const appState:any = useSelector((state:any)=> state?.auth)
-
+  console.log('appp')
   const firebaseConfig = {
     apiKey: "AIzaSyCDjZfOPANsU4OS1nCXwQH32HCrkY9h4cY",
     authDomain: "praticeapp-10164.firebaseapp.com",
@@ -22,18 +17,17 @@ const  App=()=> {
     appId: "1:135769240823:web:fb1c3c92c1412992d80ff2",
     measurementId: "G-S44FLBEH8Q"
   };
+  
+  // Initialize Firebase
   initializeApp(firebaseConfig);
-
-
-
   return (
 
     <Router basename={process.env.PUBLIC_URL}>
+    {/* <Header /> */}
     <Routes>
-
-    {!appState?.isLogin && <Route  path={'/'}  element={<Login />} /> }
+      <Route  path={'/'}  element={<Login />} />
       <Route path='/Register' element={<Register />} />
-     {appState?.isLogin &&  <Route path='/' element={<Home />} />} 
+     
     </Routes>
   </Router>
 
@@ -42,4 +36,3 @@ const  App=()=> {
 }
 
 export default App;
-
