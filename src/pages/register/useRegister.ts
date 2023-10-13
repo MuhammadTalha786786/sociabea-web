@@ -10,7 +10,7 @@ import { doc, setDoc } from "firebase/firestore";
 
 
 
-function UseRegister() {
+export const useRegister=()=> {
   const [name, setName] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -31,7 +31,6 @@ function UseRegister() {
       onFirebaseUpload(event.target.files[0])
   }
 
-  console.log()
 
 
   useEffect(() => {
@@ -74,7 +73,6 @@ function UseRegister() {
     setPassword('')
 
   }
-  console.log(imageURL,"url")
 
   const writeUserData = async (id:string) => {
     console.log(id)
@@ -193,4 +191,3 @@ function UseRegister() {
 
 }
 
-export default UseRegister

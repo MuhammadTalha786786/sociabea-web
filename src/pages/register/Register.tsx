@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import Input from '../../components/Input'
 import { Avatar } from 'flowbite-react';
-import UseRegister from './UseRegister';
 import UseGoogleSIgnIn from '../../utils/GoogleSIgnIn';
+import { useRegister } from './useRegister';
+
 
 
 
@@ -25,8 +26,7 @@ const Register = () => {
     userRegiter
 
 
-  } = UseRegister()
-  console.log(image, "url")
+  } = useRegister()
 
   const {SignInWithGoogle} =UseGoogleSIgnIn()
 
@@ -46,11 +46,11 @@ const Register = () => {
           </div>
 
           {/* <!-- Right column container --> */}
-          <div className="mb-10 md:mb-0 md:w-4/12 lg:w-4/12 xl:w-5/12 ">
+          <div className="mb-10 md:mb-0 md:w-4/12 lg:w-4/12 xl:w-5/12">
             <form>
               {/* <!--Sign in sectin--> */}
               <div className="flex flex-row items-center justify-center lg:justify-start">
-                <p className="mb-0 mr-4 text-lg">Sign in withs</p>
+                <p className="mb-0 mr-4 text-lg">Sign in with</p>
 
 
                 <button
