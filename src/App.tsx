@@ -10,7 +10,8 @@ import { useSelector } from 'react-redux';
 
 
 const  App=()=> {
-  const appState:any = useSelector((state:any)=> state?.auth)
+  const appState:any = useSelector((state:any)=> state?.auth?.userInfo)
+  console.log(appState,"app state ")
 
   const firebaseConfig = {
     apiKey: "AIzaSyCDjZfOPANsU4OS1nCXwQH32HCrkY9h4cY",

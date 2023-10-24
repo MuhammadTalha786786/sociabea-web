@@ -19,9 +19,10 @@ const UseGoogleSIgnIn = () => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential?.accessToken;
         const user = result.user;
-        dispatch(setSignIn({isLogin:true}))
+        console.log(user)
         dispatch(setUserInfo({user:user}))  
-        window.location.replace('Home')
+        // dispatch(setSignIn({isLogin:true}))
+        window.location.replace('/')
 
       }).catch((error) => {
         const errorCode = error.code;

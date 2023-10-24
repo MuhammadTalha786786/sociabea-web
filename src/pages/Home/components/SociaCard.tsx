@@ -1,39 +1,18 @@
 import moment from 'moment'
 import React from 'react'
+import { sociacardI } from '../type'
+import { useSociaCard } from './useSociaCard'
+import { useSelector } from 'react-redux'
 
 
-interface sociacardI {
-    logoutUser: () => void
-    item: {
-        userImage:string 
-        userName:string
-        dateCreated:any
-        postImage:string
-        postDetail:string
-        likes:{
-            isLike:boolean
-            postDetail:string
-            timeLiked:Date
-            userID:string
-            userName:string
-            userProfileImaege:string
-            
-        }[]
-        comments:{
-            comment:string
-            commentCreated:Date
-            commentID:string
-            postID:string
-            userID:string
-            userImage:string
-            userProfileName:string
-
-        }[]
-    }
-}
 
 
 const SociaCard = (props: sociacardI) => {
+
+    const { likedPost , addPostLiked, likesLength} = useSociaCard({ props })
+
+
+
     return (
         <div className=' wrapper pt-10'>
             <article className="   max-w-4xl	 mb-4 break-inside p-6 rounded-xl bg-slate-100	 dark:bg-slate-800 flex flex-col bg-clip-border">
@@ -54,12 +33,12 @@ const SociaCard = (props: sociacardI) => {
                                 </span>
                             </div>
                             <div className="text-slate-500 dark:text-slate-300">
-                               {moment(props?.item?.dateCreated?.toDate()).format('MMMM Do, YYYY')}
+                                {moment(props?.item?.dateCreated?.toDate()).format('MMMM Do, YYYY')}
                             </div>
                         </div>
                     </div>
                 </div>
-        
+
                 <div className="py-4">
                     <a className="flex" href="#">
                         <img className="h-2/6 w-auto   rounded-lg"
@@ -71,14 +50,17 @@ const SociaCard = (props: sociacardI) => {
                 </p>
                 <div className="py-4">
                     <a className="inline-flex items-center " href="#">
-                        <span className="mr-2">
-                            <svg className="fill-slate-100 dark:fill-slate-100" style={{ width: "22px", height: '22px' }} viewBox="0 0 24 24">
-                                <path
-                                    d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z">
-                                </path>
-                            </svg>
+                        <span className="mr-2"  onClick={()=>{}}>
+                            {likedPost ? <svg  onClick={(e)=>addPostLiked(e)}  width="40px" height="40px " viewBox="0 0 24 24"xmlns="http://www.w3.org/2000/svg" version="1.1" >
+                                <g transform="translate(0 -1028.4)">
+                                    <path d="m7 1031.4c-1.5355 0-3.0784 0.5-4.25 1.7-2.3431 2.4-2.2788 6.1 0 8.5l9.25 9.8 9.25-9.8c2.279-2.4 2.343-6.1 0-8.5-2.343-2.3-6.157-2.3-8.5 0l-0.75 0.8-0.75-0.8c-1.172-1.2-2.7145-1.7-4.25-1.7z" fill="#e74c3c" />
+                                </g>
+                            </svg> :
+
+                                <svg onClick={(e)=>addPostLiked(e)} width="40px" height="40px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#000000"><path d="M14.88 4.78a3.489 3.489 0 0 0-.37-.9 3.24 3.24 0 0 0-.6-.79 3.78 3.78 0 0 0-1.21-.81 3.74 3.74 0 0 0-2.84 0 4 4 0 0 0-1.16.75l-.05.06-.65.65-.65-.65-.05-.06a4 4 0 0 0-1.16-.75 3.74 3.74 0 0 0-2.84 0 3.78 3.78 0 0 0-1.21.81 3.55 3.55 0 0 0-.97 1.69 3.75 3.75 0 0 0-.12 1c0 .317.04.633.12.94a4 4 0 0 0 .36.89 3.8 3.8 0 0 0 .61.79L8 14.31l5.91-5.91c.237-.233.44-.5.6-.79A3.578 3.578 0 0 0 15 5.78a3.747 3.747 0 0 0-.12-1zm-1 1.63a2.69 2.69 0 0 1-.69 1.21l-5.21 5.2-5.21-5.2a2.9 2.9 0 0 1-.44-.57 3 3 0 0 1-.27-.65 3.25 3.25 0 0 1-.08-.69A3.36 3.36 0 0 1 2.06 5a2.8 2.8 0 0 1 .27-.65c.12-.21.268-.4.44-.57a2.91 2.91 0 0 1 .89-.6 2.8 2.8 0 0 1 2.08 0c.33.137.628.338.88.59l1.36 1.37 1.36-1.37a2.72 2.72 0 0 1 .88-.59 2.8 2.8 0 0 1 2.08 0c.331.143.633.347.89.6.174.165.32.357.43.57a2.69 2.69 0 0 1 .35 1.34 2.6 2.6 0 0 1-.06.72h-.03z" /></svg>
+                            }
                         </span>
-                        <span className="text-lg font-bold">{props?.item?.likes?.length}</span>
+                        <span className="text-lg font-bold">{likesLength?.length}</span>
                     </a>
                 </div>
                 <div className="relative">
@@ -112,7 +94,7 @@ const SociaCard = (props: sociacardI) => {
                                             <span className="text-slate-500 dark:text-slate-300">{moment(x?.commentCreated?.toDate()).fromNow()}</span>
                                         </div>
                                         <p>
-                                           {x?.comment}
+                                            {x?.comment}
                                         </p>
                                         {/* <div className="mt-2 flex items-center">
                                             <a className="inline-flex items-center py-2 mr-3" href="#">

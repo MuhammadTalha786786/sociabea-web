@@ -11,7 +11,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setSignIn: (state, action) => {
-        state.isLogin = action.payload.isLogin;
+      state.userInfo = action.payload.userInfo;
     },
     setUserInfo:(state, action)=> {
       state.userInfo = action.payload.userInfo;
@@ -23,3 +23,4 @@ const authSlice = createSlice({
 
 export const { setSignIn,setUserInfo} = authSlice.actions;
 export default authSlice.reducer;
+
