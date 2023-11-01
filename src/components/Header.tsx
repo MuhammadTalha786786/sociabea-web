@@ -1,25 +1,144 @@
 
 import React from 'react'
+import { useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
+import { loginUserI } from '../pages/Home/type';
+
 
 interface headerI {
   logoutuser:()=> void
 }
 
 const Header=(props:headerI)=> {
+  const loginUser = useSelector((appState:loginUserI)=>appState?.auth)
+
+  const {logoutuser} =props
+
+
+
+
   return (
 
-<div className="bg-slate-100 min-w-full container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-     <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-       {/* <img src={locofy} /> */}
-     </a>
-     <div className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-       <a className="mr-5">First Link</a>
-       <a className="mr-5">Second Link</a>
-       <a className="mr-5">Third Link</a>
-       <a className="mr-5">Fourth Link</a>
-     </div>
-     <button className="inline-flex items-center bg-yellow-500 border-0 py-1 px-3 mt-4 md:mt-0"   onClick={props?.logoutuser}>Logout</button>
+<div className="w-full h-14 bg-slate-100	 grid grid-cols-7 gap-4 fixed z-50">
+<div className="col-span-2 flex items-center">
+  <div className="flex items-center ml-2">
+    <div className="h-10 text-primary">
+      <Link to="/">
+        <i className="fab fa-facebook" style={{ fontSize: 40 }}></i>
+      </Link>
+    </div>
+    <div className="h-10">
+      <input
+        placeholder="Search Facebook"
+        className="bg-white   rounded-full h-full focus:outline-none ml-2 px-3 pr-4"
+      />
+    </div>
   </div>
+</div>
+<div className="col-span-3 flex items-center justify-center space-x-2">
+  <Link to="/">
+    <div className="w-24 h-12 rounded-lg flex items-center justify-center cursor-pointer hover:bg-gray-100">
+      <div className="w-14 h-auto relative flex items-center justify-center">
+        <div
+          className={`${
+          
+               'text-primary'
+              
+          }`}
+        >
+          <i className="text-2xl fas fa-home"></i>
+        </div>
+      </div>
+    </div>
+  </Link>
+  <Link to="/watch">
+    <div className="w-24 h-12 rounded-lg flex items-center justify-center cursor-pointer hover:bg-gray-100">
+      <div className="w-14 h-auto relative flex items-center justify-center">
+        <div className="absolute bg-red-500 text-white text-xs font-bold px-1 rounded-lg top-0 right-0">
+          9+
+        </div>
+        <div
+          className={`${
+           'text-primary' 
+          }`}
+        >
+          <i className="text-2xl fas fa-tv"></i>
+        </div>
+      </div>
+    </div>
+  </Link>
+  <Link to="/marketplace">
+    <div className="w-24 h-12 rounded-lg flex items-center justify-center cursor-pointer hover:bg-gray-100">
+      <div className="w-14 h-auto relative flex items-center justify-center">
+        <div className="hidden absolute bg-red-500 text-white text-xs font-bold px-1 rounded-lg top-0 right-0">
+          9+
+        </div>
+        <div
+          className={`${
+           'text-gray-400'
+          }`}
+        >
+          <i className="text-2xl fas fa-store"></i>
+        </div>
+      </div>
+    </div>
+  </Link>
+  <Link to="/groups">
+    <div className="w-24 h-12 rounded-lg flex items-center justify-center cursor-pointer hover:bg-gray-100">
+      <div className="w-14 h-auto relative flex items-center justify-center">
+        <div className="absolute bg-red-500 text-white text-xs font-bold px-1 rounded-lg top-0 right-0">
+          2
+        </div>
+        <div
+          className={`${
+          'text-gray-400'
+          }`}
+        >
+          <i className="text-2xl fas fa-users"></i>
+        </div>
+      </div>
+    </div>
+  </Link>
+  <Link to="/gaming">
+    <div className="w-24 h-12 rounded-lg flex items-center justify-center cursor-pointer hover:bg-gray-100">
+      <div className="w-14 h-auto relative flex items-center justify-center">
+        <div className="absolute bg-red-500 text-white text-xs font-bold px-1 rounded-lg top-0 right-0">
+          9+
+        </div>
+        <div
+          className={`${
+           'text-gray-400'
+          }`}
+        >
+          <i className="text-2xl fas fa-gamepad"></i>
+        </div>
+      </div>
+    </div>
+  </Link>
+</div>
+<div className="col-span-2 flex items-center justify-end">
+  <div className="h-10 w-auto flex items-center space-x-2 pr-2">
+    <Link to="/profile">
+      <button className="h-10 px-2 flex space-x-1 items-center justify-center focus:outline-none hover:bg-gray-300 rounded-full">
+        <div className="h-8">
+          <img
+            src={loginUser?.userInfo?.photoURL}
+            className="w-8 h-8 rounded-full"
+            alt="dp"
+          />
+        </div>
+        <div className="h-8 flex items-center justify-content">
+          <p className="font-semibold text-sm">{loginUser?.userInfo?.userName}</p>
+        </div>
+      </button>
+    </Link>
+
+    <button onClick={logoutuser}   className="w-10 h-10 bg-gray-200 focus:outline-none hover:bg-gray-300 rounded-full">
+      <i className="fas fa-sign-out-alt"></i>
+    </button>
+  </div>
+</div>
+</div>
 
     
   )

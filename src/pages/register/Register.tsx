@@ -3,6 +3,7 @@ import Input from '../../components/Input'
 import { Avatar } from 'flowbite-react';
 import UseGoogleSIgnIn from '../../utils/GoogleSIgnIn';
 import { useRegister } from './useRegister';
+import { ColorRing } from 'react-loader-spinner';
 
 
 
@@ -22,13 +23,13 @@ const Register = () => {
     imageChange,
     onFirebaseUpload,
     isError,
-    errorMessage, 
-    userRegiter
+    errorMessage,
+    userRegiter, isLoading, setIsLoading
 
 
   } = useRegister()
 
-  const {SignInWithGoogle} =UseGoogleSIgnIn()
+  const { SignInWithGoogle } = UseGoogleSIgnIn({setIsLoading})
 
 
 
@@ -92,7 +93,7 @@ const Register = () => {
               <div className='mb-5'   >
 
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="file_input">Choose Profile Image</label>
-                <input className="block w-full text-sm text-gray-900 border   border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" accept="image/png, image/gif, image/jpeg" id="file_input" type="file" onChange={imageChange}  />
+                <input className="block w-full text-sm text-gray-900 border   border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" accept="image/png, image/gif, image/jpeg" id="file_input" type="file" onChange={imageChange} />
 
               </div>
               <Input value={name} showPassword={false} showVisibilty={() => { }} label='Enter Name' placeholder='Enter Name' setValue={setName} />
@@ -102,8 +103,8 @@ const Register = () => {
               <Input value={email} showPassword={false} showVisibilty={() => { }} label='Enter email' placeholder='Enter Email' setValue={setEmail} />
 
               {/* <!--Password input--> */}
- 
-              <Input value={password} showVisibilty={() => {setShowPassword(!showPassword) }} isPassword={true} label='Enter Password' placeholder='Enter Password' setValue={setPassword} showPassword={showPassword} setShowPassword={setShowPassword}   />
+
+              <Input value={password} showVisibilty={() => { setShowPassword(!showPassword) }} isPassword={true} label='Enter Password' placeholder='Enter Password' setValue={setPassword} showPassword={showPassword} setShowPassword={setShowPassword} />
 
               <div className="mb-6 flex items-center justify-between">
                 {/* <!-- Remember me checkbox --> */}
@@ -130,11 +131,20 @@ const Register = () => {
               <div className="text-center lg:text-left">
                 {/* <TERipple rippleColor="light"> */}
                 <button
+                  disabled={isLoading}
                   onClick={() => { userRegiter() }}
                   type="button"
                   className="w-full  inline-block rounded bg-primary px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
                 >
-                  Register
+                  {isLoading ? <ColorRing
+                    visible={true}
+                    height="40"
+                    width="40"
+                    ariaLabel="blocks-loading"
+                    wrapperStyle={{}}
+                    wrapperClass="blocks-wrapper"
+                    colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+                  /> : "Register"}
                 </button>
                 {/* </TERipple> */}
 

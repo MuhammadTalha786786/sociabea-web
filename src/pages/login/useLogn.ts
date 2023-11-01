@@ -22,7 +22,7 @@ export const useLogin = () => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [showPassword, setShowPassword] = useState<boolean>(false)
-
+  const [isLoading,setIsLoading] = useState<boolean>(false)
 
   const handlePasswordVisiblity = () => {
     setShowPassword(!showPassword)
@@ -46,13 +46,17 @@ export const useLogin = () => {
         LoginUser.photoURL= docSnap.data().image
         LoginUser.email =docSnap.data().email
         LoginUser.uid =docSnap.data().uid
-
-
-
         dispatch(setSignIn({userInfo:LoginUser}))
-    }).catch(()=>{});
+        setIsLoading(false)
+    }).catch((err:any)=>{
+      Swal.fire({
+        title:err?.message
+      })
+      setIsLoading(false)
+    });
       console.log("Document data:", docSnap.data());
     } else {
+      setIsLoading(false)
       // docSnap.data() will be undefined in this case
       console.log("No such document!");
     }
@@ -61,6 +65,7 @@ export const useLogin = () => {
   }
 
   const loginUser =()=>{
+    setIsLoading(true);
     
       const auth = getAuth();
       signInWithEmailAndPassword(auth, email, password)
@@ -75,7 +80,7 @@ export const useLogin = () => {
 
           updateLogin(user?.uid)
 
-
+       
           // dispatch(setUserInfo({user:data}))  
           // ...
           // dispatch(setSignIn({isLogin:true}))
@@ -86,6 +91,8 @@ export const useLogin = () => {
           Swal.fire({
             title:errorMessage
           })
+          setIsLoading(false)
+
         });
 
   }
@@ -100,7 +107,8 @@ export const useLogin = () => {
     showPassword,
     setShowPassword,
     handlePasswordVisiblity,
-    loginUser
+    loginUser, isLoading,
+    setIsLoading
   }
 
 }

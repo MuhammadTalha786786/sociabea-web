@@ -1,41 +1,60 @@
 import React, { useEffect, useState } from 'react'
-import { SocilCardHook } from '../type'
+import { SocilCardHook, loginUserI } from './type'
 import { useSelector } from 'react-redux'
 import { doc, setDoc, updateDoc } from 'firebase/firestore'
-import { db } from '../../../firebase'
+import { db } from '../../firebase'
 import Swal from 'sweetalert2'
+import { v4 as uuid } from "uuid";
 
 export const useSociaCard= (props:SocilCardHook)=> {
      
 
     const [tempLikes, setTempLikes]= useState(props?.props?.item?.likes)
-    const [tempComments,setTempComments] = useState([])
-    const loginUser =  useSelector((state:any)=>state.auth?.userInfo)
+    const [comment, setComment] = useState<string>('')
+    const loginUser =  useSelector((state:loginUserI)=>state.auth?.userInfo)
     const likedPost = props?.props?.item?.likes?.find(x => x.userID == loginUser?.uid && x.isLike == true)
     const likesLength = props?.props?.item?.likes?.filter(x =>  x.isLike == true)
     
-
-   
-
-    
-
     useEffect(()=>{
       setTempLikes(props?.props?.item?.likes)
     },[])
 
 
     const addComment =()=>{
-      let commentID =  []
+      let commentID =  uuid();
+      let userID = loginUser?.uid;
+      let userProfileName = loginUser?.userName;
+      let userProfileImage = loginUser?.photoURL;
+      let tempComments = props?.props?.item?.comments ? props?.props?.item?.comments :[];
+      tempComments.push({
+        userID: userID,
+        userImage: userProfileImage,
+        userProfileName: userProfileName,
+        comment: comment,
+        commentCreated: new Date(),
+        postID: props?.props?.item.postID,
+        commentID: commentID,
+      });
+
+      let data ={
+        comments:tempComments,
+      }
  
+      const docRef = doc(db, "posts", props?.props?.item?.postID);
+      updateDoc(docRef, data).then(()=>{
+        Swal.fire({
+          icon: 'success',
+          title: 'Hurrah...',
+          text: 'your comment has been added' ,
+        })
+        setComment('')
+    }).catch(()=>{});
        
 
     }
     
     const addPostLiked = (e:any) => {
-      e.preventDefault()
-
-         
-       
+      e.preventDefault()      
         if (tempLikes?.length > 0) {
           let findCurrent = tempLikes.some(item => item.userID === loginUser?.uid  )  ;
           console.log(findCurrent,'sdsdsdsdsdds')
@@ -53,16 +72,9 @@ export const useSociaCard= (props:SocilCardHook)=> {
 
               let data ={
                 likes: tempLikes,
-              }
+              } 
              updateDoc(docRef, data).then(()=>{
-                // Swal.fire({
-                //   icon: 'success',
-                //   title: 'Hurrah...',
-                //   text: 'Registration Successfully main else callesd' ,
-                // })
-            }).catch(()=>{});
-
-             
+            }).catch(()=>{});        
           }  else {
             tempLikes?.push({
               userID: loginUser?.uid ? loginUser?.uid:"#555550099",
@@ -79,18 +91,10 @@ export const useSociaCard= (props:SocilCardHook)=> {
               }
               console.log(data,"data")
              updateDoc(docRef, data).then(()=>{
-                // Swal.fire({
-                //   icon: 'success',
-                //   title: 'Hurrah...',
-                //   text: 'Registration Successfully main else called' ,
-                // })
             }).catch(()=>{});
         }
-
           }
-
-         
-        
+  
         else {
             tempLikes?.push({
               userID: loginUser?.uid ? loginUser?.uid:"#555550099",
@@ -107,19 +111,9 @@ export const useSociaCard= (props:SocilCardHook)=> {
               likes: tempLikes,
             }
            updateDoc(docRef, data).then(()=>{
-              // Swal.fire({
-              //   icon: 'success',
-              //   title: 'Hurrah...',
-              //   text: 'Registration Successfully main else called www' ,
-              // })
+
           }).catch(()=>{});
-        }
-
-
-            
-          
-        
-        
+        }        
       };
     
     
@@ -128,7 +122,10 @@ export const useSociaCard= (props:SocilCardHook)=> {
     return {
       likesLength,
         likedPost,
-        addPostLiked
+        addPostLiked,
+        comment,
+        setComment,
+        addComment
  }
 }
 

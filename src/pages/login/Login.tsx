@@ -3,12 +3,13 @@ import Input from '../../components/Input'
 import { useLogin } from './useLogn'
 import UseGoogleSIgnIn from '../../utils/GoogleSIgnIn'
 import { Link } from 'react-router-dom'
+import { ColorRing } from 'react-loader-spinner'
 
 function Login() {
  
- const {email, setEmail, password,setPassword, showPassword, setShowPassword, handlePasswordVisiblity, loginUser} =useLogin()
+ const {email, setEmail, password,setPassword, showPassword, setShowPassword, handlePasswordVisiblity, loginUser, isLoading, setIsLoading} =useLogin()
   
-  const {SignInWithGoogle} =UseGoogleSIgnIn()
+  const {SignInWithGoogle} =UseGoogleSIgnIn({setIsLoading})
   return (
     <section className="h-screen">
     <div className="h-full">
@@ -83,11 +84,20 @@ function Login() {
             <div className="text-center lg:text-left">
               {/* <TERipple rippleColor="light"> */}
                 <button
+                 disabled={isLoading}
                   onClick={()=>loginUser()}
                   type="button"
-                  className="w-full  inline-block rounded bg-primary px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                  className="w-full items-center  content-center		  inline-block  justify-center  rounded bg-primary px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
                 >
-                  Login
+                   {isLoading ? <ColorRing
+                    visible={true}
+                    height="40"
+                    width="40"
+                    ariaLabel="blocks-loading"
+                    wrapperStyle={{}}
+                    wrapperClass="blocks-wrapper"
+                    colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+                  /> : "Login"}
                 </button>
               {/* </TERipple> */}
 

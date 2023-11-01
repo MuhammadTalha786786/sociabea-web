@@ -35,3 +35,20 @@ export interface SocilCardHook {
    props:sociacardI    
 
 }
+
+
+export interface loginUserI{
+    auth:{
+      userInfo:loginUser
+    }
+  }
+  
+  export type loginUser ={
+    isLogin: boolean,
+    isLoggedIn: boolean,
+    userName: string
+    photoURL: string
+    email: string
+    uid: string
+  }
+  

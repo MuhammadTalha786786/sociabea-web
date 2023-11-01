@@ -20,6 +20,7 @@ export const useRegister=()=> {
   const [imageURL, setImageURL] = useState<any>('')
   const [isError, setIsError] = useState<boolean>(false)
   const [errorMessage, setErrorMessage] = useState<string>('')
+  const [isLoading, setIsLoading] =useState<boolean>(false)
 
   const imageChange = (event: any) => {
     setImageToUpload(event.target.files[0]);
@@ -42,6 +43,7 @@ export const useRegister=()=> {
 
 
   const onFirebaseUpload = async (image:any) => {
+    setIsLoading(true)
     const storage = getStorage();
 
     const storageRef = ref(storage, `${image?.name}`);
@@ -58,6 +60,7 @@ export const useRegister=()=> {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log(downloadURL, "firebase url")
           setImageURL(downloadURL)
+          setIsLoading(false)
         });
       }
     );
@@ -76,6 +79,7 @@ export const useRegister=()=> {
 
   const writeUserData = async (id:string) => {
     console.log(id)
+
     await setDoc(doc(db, "users", id), {
       email:email,
       image:imageURL,
@@ -88,6 +92,8 @@ export const useRegister=()=> {
         title: 'Hurrah...',
         text: 'Registration Successfully',
       })
+      setIsLoading(false)
+
       clearData()
     
 
@@ -95,6 +101,7 @@ export const useRegister=()=> {
   }
 
   const userRegiter =async () => {
+    
     // onFirebaseUpload()
     if (name == '') {
       Swal.fire({
@@ -130,6 +137,7 @@ export const useRegister=()=> {
       })
     }
     else {
+      setIsLoading(true)
    
         const auth =  getAuth();
         createUserWithEmailAndPassword(auth, email, password)
@@ -147,6 +155,7 @@ export const useRegister=()=> {
             // ...
           })
           .catch((error) => {
+            setIsLoading(false)
             const errorCode = error.code;
             const errorMessage = error.message;
             Swal.fire({
@@ -185,7 +194,8 @@ export const useRegister=()=> {
     onFirebaseUpload, isError,
     setIsError,
     errorMessage,
-    userRegiter
+    userRegiter, isLoading,
+    setIsLoading
 
   }
 

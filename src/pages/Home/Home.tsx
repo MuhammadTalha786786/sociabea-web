@@ -3,6 +3,7 @@ import React from 'react'
 import { useHome } from './useHome'
 import SociaCard from './components/SociaCard'
 import Header from '../../components/Header'
+import CreatePostBox from './components/CreatePost'
 function Home() {
 
   const {
@@ -22,6 +23,11 @@ function Home() {
         // height: '100vh',
 
       }}>
+        <div style={{marginTop:100}}>
+           <CreatePostBox/>
+        </div>
+        <div  style={{marginTop:20}}>
+
       {
         postData.map((x) => {
           return (
@@ -32,6 +38,7 @@ function Home() {
             
           })
         }
+        </div>
     </div>
         </>
 
