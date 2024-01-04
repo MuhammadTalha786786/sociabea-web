@@ -11,14 +11,17 @@ import { useSociaCard } from '../useSociaCard'
 
 const SociaCard = (props: sociacardI) => {
 
-    const { likedPost , addPostLiked, likesLength, setComment, comment, addComment} = useSociaCard({ props })
+    const { likedPost , addPostLiked, likesLength, setComment, comment, addComment} = useSociaCard({props })
+
+    const createdDate = props?.item?.dateCreated?.toDate()
 
 
 
     return (
-        <div className=' wrapper pt-10'>
-            <article className="   max-w-2xl	 mb-4 break-inside p-6 rounded-xl bg-slate-100	 dark:bg-slate-800 flex flex-col bg-clip-border">
-                <div className="flex pb-6 items-center justify-between">
+        <div className='wrapper pt-10'>
+            <article className="max-w-2x mb-4 break-inside rounded-md  bg-slate-300 border-red-200	 dark:bg-slate-800 flex flex-col bg-clip-border">
+            
+                <div className="flex  p-6 pb-6 items-center justify-between">
                     <div className="flex">
                         <a className="inline-block mr-4" href="#">
                             <img className="rounded-full max-w-none w-14 h-14" src={props?.item?.userImage } />
@@ -35,22 +38,22 @@ const SociaCard = (props: sociacardI) => {
                                 </span>
                             </div>
                             <div className="text-slate-500 dark:text-slate-300">
-                                {moment(props?.item?.dateCreated?.toDate()).format('MMMM Do, YYYY')}
+                                {moment( createdDate).format('MMMM Do, YYYY')}
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="py-4">
+                <div className="bg-black w-full">
                     {/* <a className="flex" href="#"> */}
-                        <img className="max-h-fit  w-screen rounded-lg    "
+                        <img className="max-h-96 w-full"
                             src={props?.item?.postImage} />
                     {/* </a> */}
                 </div>
-                <p>
+                <p  className='p-6'>
                     {props?.item?.postDetail}
                 </p>
-                <div className="py-4">
+                <div className="py-4 p-6">
                     <a className="inline-flex items-center " href="#">
                         <span className="mr-2"  onClick={()=>{}}>
                             {likedPost ? <svg  onClick={(e)=>addPostLiked(e)}  width="40px" height="40px " viewBox="0 0 24 24"xmlns="http://www.w3.org/2000/svg" version="1.1" >
@@ -65,25 +68,25 @@ const SociaCard = (props: sociacardI) => {
                         <span className="text-lg font-bold">{likesLength?.length}</span>
                     </a>
                 </div>
-                <div className="relative">
+                <div className="relative p-6">
                     <input
                         value={comment}
                          onChange={(e)=>{setComment(e.target.value)}}
                         className="pt-2 pb-2 pl-3 w-full h-11 bg-slate-100 dark:bg-slate-600 rounded-lg placeholder:text-slate-600 dark:placeholder:text-slate-300 font-medium pr-20"
                         type="text" placeholder="Write a comment" />
-                    <span className="flex absolute right-3 top-2/4 -mt-3 items-center">
+                    <span className=" flex absolute right-3 top-2/4 -mt-3 items-center">
                      
-                        <svg onClick={addComment}  className="fill-blue-500 dark:fill-slate-50" style={{ width: "22px", height: '22px' }} viewBox="0 0 24 24">
+                        <svg onClick={addComment}  className="fill-blue-500 mr-8 dark:fill-slate-50" style={{ width: "22px", height: '22px' }} viewBox="0 0 24 24">
                             <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"></path>
                         </svg>
                     </span>
                 </div>
-                <div className="pt-6">
+                <div className="pt-6 p-6">
                     {
                         props?.item?.comments?.map((x: any, index: number) => {
-
+                    
                             return (
-                                index < 1 &&
+                                index < 8 &&
                                 <div className="media flex pb-4">
                                     <a className="mr-4" href="#">
                                         <img className="rounded-full max-w-none w-12 h-12" src={x?.userImage ? x?.userImage :'https://img.freepik.com/premium-vector/man-character_665280-46967.jpg'} />

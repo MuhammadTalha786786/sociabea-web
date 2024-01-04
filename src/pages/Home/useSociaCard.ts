@@ -14,13 +14,21 @@ export const useSociaCard= (props:SocilCardHook)=> {
     const loginUser =  useSelector((state:loginUserI)=>state.auth?.userInfo)
     const likedPost = props?.props?.item?.likes?.find(x => x.userID == loginUser?.uid && x.isLike == true)
     const likesLength = props?.props?.item?.likes?.filter(x =>  x.isLike == true)
-    
+    const [commentsLoading, setCommentsLoading] = useState<boolean>(false)
     useEffect(()=>{
       setTempLikes(props?.props?.item?.likes)
     },[])
 
 
+    useEffect(()=>{
+      props?.props?.getPostData()
+    },[props?.props?.item?.comments, commentsLoading])
+
+
+
+
     const addComment =()=>{
+      // setCommentsLoading(true)
       let commentID =  uuid();
       let userID = loginUser?.uid;
       let userProfileName = loginUser?.userName;
@@ -48,6 +56,9 @@ export const useSociaCard= (props:SocilCardHook)=> {
           text: 'your comment has been added' ,
         })
         setComment('')
+        setCommentsLoading(!commentsLoading)
+        // window.location.reload();
+   
     }).catch(()=>{});
        
 
@@ -62,7 +73,7 @@ export const useSociaCard= (props:SocilCardHook)=> {
             
             const upd_obj = tempLikes.map(obj => {
     
-              if (obj.userID == loginUser?.uid) {
+              if (obj?.userID == loginUser?.uid) {
                 obj.isLike = !obj.isLike;
               }
               return obj;

@@ -8,10 +8,11 @@ function Home() {
 
   const {
     logoutuser,
-    postData
+    postData,
+    getPostData
   } = useHome()
+  
 
-  console.log(postData)
   return (
     <>
     <Header logoutuser={logoutuser}/>
@@ -32,7 +33,7 @@ function Home() {
         postData.map((x) => {
           return (
             
-            <SociaCard logoutUser={logoutuser}  item={x} />
+            <SociaCard  getPostData={getPostData} logoutUser={logoutuser}  item={x} />
             )
             
             

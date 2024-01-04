@@ -36,12 +36,14 @@ const UseGoogleSIgnIn = (props:googleSignI) => {
           isLoggedIn:true
         };
 
+
+
         console.log(LoginUser,"login user")
         dispatch(setUserInfo({userInfo:LoginUser}))
         setIsLoading(false)
   
         // dispatch(setSignIn({isLogin:true}))
-        // window.location.replace('/')
+        window.location.replace('/')
 
       }).catch((error) => {
         setIsLoading(false) ;

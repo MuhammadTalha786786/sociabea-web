@@ -9,9 +9,9 @@ import { useSelector } from 'react-redux';
 
 
 
-const  App=()=> {
-  const appState:any = useSelector((state:any)=> state?.auth?.userInfo)
-  console.log(appState,"app state ")
+const App = () => {
+  const appState: any = useSelector((state: any) => state?.auth?.userInfo)
+  console.log(appState?.isLogin, "app state ")
 
   const firebaseConfig = {
     apiKey: "AIzaSyCDjZfOPANsU4OS1nCXwQH32HCrkY9h4cY",
@@ -30,15 +30,21 @@ const  App=()=> {
   return (
 
     <Router basename={process.env.PUBLIC_URL}>
-    <Routes>
+      <Routes>
 
-    {!appState?.isLogin && <Route  path={'/'}  element={<Login />} /> }
-      <Route path='/Register' element={<Register />} />
-     {appState?.isLogin &&  <Route path='/' element={<Home />} />} 
-    </Routes>
-  </Router>
+        {!appState?.isLogin &&
+          <>
+            <Route path={'/'} element={<Login />} />
 
-    
+            <Route path='/Register' element={<Register />} />
+          </>
+
+        }
+        {appState?.isLogin && <Route path='/' element={<Home />} />}
+      </Routes>
+    </Router>
+
+
   );
 }
 

@@ -39,7 +39,8 @@ export const useHome = () => {
 
   return {
     logoutuser,
-    postData
+    postData, 
+    getPostData
   }
     
 }

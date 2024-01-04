@@ -27,12 +27,14 @@ export interface sociacardI {
 
         }[]
     }
+    getPostData:any
 }
 
 
 
 export interface SocilCardHook {
-   props:sociacardI    
+   props:sociacardI
+   
 
 }
 
